@@ -62,7 +62,7 @@ function isPug(file) {
 function processDirectory(directory, f) {
     const entries = fs.readdirSync(directory);
 
-    for (var i = 0; i < entries.length; ++i) {
+    for (let i = 0; i < entries.length; ++i) {
         const entry = path.join(directory, entries[i]);
 
         if (fs.statSync(entry).isDirectory()) {
