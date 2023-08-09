@@ -9,5 +9,12 @@
   },
   "dependencies": {
     "pug": "^3.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matheusmoreira/pug-simple"
+  },
+  "bugs": {
+    "url": "https://github.com/matheusmoreira/pug-simple/issues"
   }
 }
