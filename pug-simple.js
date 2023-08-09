@@ -27,15 +27,14 @@ const EXIT_CODES = {
 };
 
 function validateArguments(argv) {
-    const program = path.basename(argv[1]);
-    const arguments = argv.slice(2);
+    const [node, program, ...arguments] = argv;
 
     if (arguments.length !== 2) {
-        console.log(`${program} <input directory> <output directory>`);
+        console.log(`${path.basename(program)} <input directory> <output directory>`);
         process.exit(EXIT_CODES.INVALID_ARGUMENTS);
     }
 
-    const inputDirectory = arguments[0], outputDirectory = arguments[1];
+    const [inputDirectory, outputDirectory] = arguments;
 
     if (!fs.statSync(inputDirectory).isDirectory()) {
         console.log(`'${inputDirectory}' is not a directory`);
