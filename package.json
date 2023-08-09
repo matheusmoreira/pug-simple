@@ -20,5 +20,9 @@
   },
   "maintainers": [
     "Matheus Afonso Martins Moreira <matheus.a.m.moreira@gmail.com> (https://www.matheusmoreira.com/)"
-  ]
+  ],
+  "funding": {
+    "type": "url",
+    "url": "https://github.com/sponsors/matheusmoreira"
+  }
 }
