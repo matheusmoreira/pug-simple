@@ -6,5 +6,8 @@
   "license": "AGPL-3.0",
   "bin": {
     "pugs": "pug-simple.js"
+  },
+  "dependencies": {
+    "pug": "^3.0.2"
   }
 }
