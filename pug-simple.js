@@ -22,8 +22,9 @@ const fs = require('fs');
 
 const EXIT_CODES = {
     INVALID_ARGUMENTS: 1,
-    INPUT_NOT_DIRECTORY: 2,
-    OUTPUT_NOT_DIRECTORY: 3,
+    INPUT_NOT_FOUND: 2,
+    INPUT_NOT_DIRECTORY: 3,
+    OUTPUT_NOT_DIRECTORY: 4,
 };
 
 function validateArguments(argv) {
@@ -35,6 +36,11 @@ function validateArguments(argv) {
     }
 
     const [inputDirectory, outputDirectory] = arguments;
+
+    if (!fs.existsSync(inputDirectory)) {
+        console.log(`Input directory not found: '${inputDirectory}'`);
+        process.exit(EXIT_CODES.INPUT_NOT_FOUND);
+    }
 
     if (!fs.statSync(inputDirectory).isDirectory()) {
         console.log(`'${inputDirectory}' is not a directory`);
