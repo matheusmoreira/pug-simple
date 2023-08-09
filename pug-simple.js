@@ -43,12 +43,12 @@ function validateArguments(argv) {
     }
 
     if (!fs.statSync(inputDirectory).isDirectory()) {
-        console.log(`'${inputDirectory}' is not a directory`);
+        console.log(`Input path exists but is not a directory: '${inputDirectory}'`);
         process.exit(EXIT_CODES.INPUT_NOT_DIRECTORY);
     }
 
     if (fs.existsSync(outputDirectory) && !fs.statSync(outputDirectory).isDirectory()) {
-        console.log(`'${outputDirectory}' exists and is not a directory`);
+        console.log(`Output path exists but is not a directory: '${outputDirectory}'`);
         process.exit(EXIT_CODES.OUTPUT_NOT_DIRECTORY);
     }
 
