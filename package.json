@@ -16,5 +16,8 @@
   },
   "bugs": {
     "url": "https://github.com/matheusmoreira/pug-simple/issues"
-  }
+  },
+  "maintainers": [
+    "Matheus Afonso Martins Moreira <matheus.a.m.moreira@gmail.com> (https://www.matheusmoreira.com/)"
+  ]
 }
