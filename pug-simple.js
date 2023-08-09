@@ -20,7 +20,7 @@
 const path = require('path');
 const fs = require('fs');
 
-function check(argv) {
+function validateArguments(argv) {
     const program = path.basename(argv[1]);
     const arguments = argv.slice(2);
 
@@ -44,7 +44,7 @@ function check(argv) {
     return [inputDirectory, outputDirectory]
 }
 
-const [inputDirectory, outputDirectory] = check(process.argv);
+const [inputDirectory, outputDirectory] = validateArguments(process.argv);
 
 const pug = require('pug');
 const pugExtension = /\.pug$/;
@@ -53,14 +53,14 @@ function isPug(file) {
     return pugExtension.test(file);
 }
 
-function walk(directory, f) {
+function processDirectory(directory, f) {
     const entries = fs.readdirSync(directory);
 
     for (var i = 0; i < entries.length; ++i) {
         const entry = path.join(directory, entries[i]);
 
         if (fs.statSync(entry).isDirectory()) {
-            walk(entry, f);
+            processDirectory(entry, f);
         } else {
             if (isPug(entry)) {
                 f(entry);
@@ -69,7 +69,7 @@ function walk(directory, f) {
     }
 }
 
-function renderPug(input) {
+function compilePugAndSave(input) {
     const relative = path.relative(inputDirectory, input);
     const outputPath = path.join(outputDirectory, relative).replace(pugExtension, '.html');
     const directory = path.dirname(outputPath);
@@ -78,4 +78,4 @@ function renderPug(input) {
     fs.writeFileSync(outputPath, output, { encoding: 'utf8' });
 }
 
-walk(inputDirectory, renderPug);
+processDirectory(inputDirectory, compilePugAndSave);
