@@ -52,6 +52,8 @@ function validateArguments(argv) {
         process.exit(EXIT_CODES.OUTPUT_NOT_DIRECTORY);
     }
 
+    // inputDirectory exists and is a directory
+    // outputDirectory either does not exist or exists and is a directory
     return [inputDirectory, outputDirectory]
 }
 
