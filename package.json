@@ -1,0 +1,10 @@
+{
+  "name": "pug-simple",
+  "description": "Simple whole directory pug template renderer",
+  "version": "1.0.0",
+  "author": "Matheus Afonso Martins Moreira",
+  "license": "AGPL-3.0",
+  "bin": {
+    "pugs": "pug-simple.js"
+  }
+}
