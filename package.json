@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "author": "Matheus Afonso Martins Moreira <matheus.a.m.moreira@gmail.com> (https://www.matheusmoreira.com/)",
   "license": "AGPL-3.0",
+  "keywords": ["pug", "html", "template", "cli", "pug-cli", "command", "directory", "tree", "recursive"],
   "bin": {
     "pugs": "pug-simple.js"
   },
