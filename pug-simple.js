@@ -20,25 +20,31 @@
 const path = require('path');
 const fs = require('fs');
 
+const EXIT_CODES = {
+    INVALID_ARGUMENTS: 1,
+    INPUT_NOT_DIRECTORY: 2,
+    OUTPUT_NOT_DIRECTORY: 3,
+};
+
 function validateArguments(argv) {
     const program = path.basename(argv[1]);
     const arguments = argv.slice(2);
 
     if (arguments.length !== 2) {
         console.log(`${program} <input directory> <output directory>`);
-        process.exit(1);
+        process.exit(EXIT_CODES.INVALID_ARGUMENTS);
     }
 
     const inputDirectory = arguments[0], outputDirectory = arguments[1];
 
     if (!fs.statSync(inputDirectory).isDirectory()) {
         console.log(`'${inputDirectory}' is not a directory`);
-        process.exit(2);
+        process.exit(EXIT_CODES.INPUT_NOT_DIRECTORY);
     }
 
     if (fs.existsSync(outputDirectory) && !fs.statSync(outputDirectory).isDirectory()) {
         console.log(`'${outputDirectory}' exists and is not a directory`);
-        process.exit(3);
+        process.exit(EXIT_CODES.OUTPUT_NOT_DIRECTORY);
     }
 
     return [inputDirectory, outputDirectory]
