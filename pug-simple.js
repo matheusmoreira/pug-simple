@@ -23,7 +23,8 @@ const fs = require('fs');
 const EXIT_CODES = {
     INVALID_ARGUMENTS: 1,
     NOT_FOUND: 2,
-    NOT_DIRECTORY: 3
+    PERMISSION_DENIED: 3,
+    NOT_DIRECTORY: 4
 };
 
 function validateArguments(argv) {
@@ -80,6 +81,10 @@ function handleError(error) {
     case 'ENOTDIR':
         console.log(`Expected directory: '${error.path}'`);
         process.exit(EXIT_CODES.NOT_DIRECTORY);
+        break;
+    case 'EACCES':
+        console.log(`Permission denied: '${error.path}'`);
+        process.exit(EXIT_CODES.PERMISSION_DENIED);
         break;
     default:
         throw error;
