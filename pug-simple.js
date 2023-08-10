@@ -22,9 +22,8 @@ const fs = require('fs');
 
 const EXIT_CODES = {
     INVALID_ARGUMENTS: 1,
-    INPUT_NOT_FOUND: 2,
-    INPUT_NOT_DIRECTORY: 3,
-    OUTPUT_NOT_DIRECTORY: 4,
+    NOT_FOUND: 2,
+    NOT_DIRECTORY: 3
 };
 
 function validateArguments(argv) {
@@ -35,26 +34,7 @@ function validateArguments(argv) {
         process.exit(EXIT_CODES.INVALID_ARGUMENTS);
     }
 
-    const [inputDirectory, outputDirectory] = arguments;
-
-    if (!fs.existsSync(inputDirectory)) {
-        console.log(`Input directory not found: '${inputDirectory}'`);
-        process.exit(EXIT_CODES.INPUT_NOT_FOUND);
-    }
-
-    if (!fs.statSync(inputDirectory).isDirectory()) {
-        console.log(`Input path exists but is not a directory: '${inputDirectory}'`);
-        process.exit(EXIT_CODES.INPUT_NOT_DIRECTORY);
-    }
-
-    if (fs.existsSync(outputDirectory) && !fs.statSync(outputDirectory).isDirectory()) {
-        console.log(`Output path exists but is not a directory: '${outputDirectory}'`);
-        process.exit(EXIT_CODES.OUTPUT_NOT_DIRECTORY);
-    }
-
-    // inputDirectory exists and is a directory
-    // outputDirectory either does not exist or exists and is a directory
-    return [inputDirectory, outputDirectory]
+    return arguments;
 }
 
 const [inputDirectory, outputDirectory] = validateArguments(process.argv);
@@ -91,4 +71,23 @@ function compilePugAndSave(input) {
     fs.writeFileSync(outputPath, output, { encoding: 'utf8' });
 }
 
-processDirectory(inputDirectory, compilePugAndSave);
+function handleError(error) {
+    switch (error.code) {
+    case 'ENOENT':
+        console.log(`Path not found: '${error.path}'`);
+        process.exit(EXIT_CODES.NOT_FOUND);
+        break;
+    case 'ENOTDIR':
+        console.log(`Expected directory: '${error.path}'`);
+        process.exit(EXIT_CODES.NOT_DIRECTORY);
+        break;
+    default:
+        throw error;
+    }
+}
+
+try {
+    processDirectory(inputDirectory, compilePugAndSave);
+} catch (error) {
+    handleError(error);
+}
