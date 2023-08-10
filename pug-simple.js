@@ -24,7 +24,8 @@ const EXIT_CODES = {
     INVALID_ARGUMENTS: 1,
     NOT_FOUND: 2,
     PERMISSION_DENIED: 3,
-    NOT_DIRECTORY: 4
+    NOT_DIRECTORY: 4,
+    NOT_FILE: 5
 };
 
 function validateArguments(argv) {
@@ -81,6 +82,10 @@ function handleError(error) {
     case 'ENOTDIR':
         console.log(`Expected directory: '${error.path}'`);
         process.exit(EXIT_CODES.NOT_DIRECTORY);
+        break;
+    case 'EISDIR':
+        console.log(`Expected file: '${error.path}'`);
+        process.exit(EXIT_CODES.NOT_FILE);
         break;
     case 'EACCES':
         console.log(`Permission denied: '${error.path}'`);
